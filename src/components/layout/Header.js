@@ -169,7 +169,7 @@ class Header extends Component {
                       </a>
                       <ul role="menu" className="sub-menu">
                         <li>
-                          <a href="shop.html">Products</a>
+                          <a href="shop">Products</a>
                         </li>
                         <li>
                           <a href="product-details.html" className="active">
@@ -188,13 +188,13 @@ class Header extends Component {
                       </ul>
                     </li>
                     <li className="dropdown">
-                      <a href="#">
+                      <a href="/blog">
                         Blog
                         <i className="fa fa-angle-down" />
                       </a>
                       <ul role="menu" className="sub-menu">
                         <li>
-                          <a href="blog.html">Blog List</a>
+                          <a href="/blog">Blog List</a>
                         </li>
                         <li>
                           <a href="blog-single.html">Blog Single</a>
