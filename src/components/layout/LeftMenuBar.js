@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import shipping from "../assets/images/home/shipping.jpg";
+import shipping from "../../assets/images/home/shipping.jpg";
 
 class LeftMenuBar extends Component {
   render() {
@@ -253,7 +253,7 @@ class LeftMenuBar extends Component {
         {/*/price-range*/}
         <div className="shipping text-center">
           {/*shipping*/}
-          <img src={shipping} alt />
+          <img src={shipping} alt="" />
         </div>
         {/*/shipping*/}
       </div>

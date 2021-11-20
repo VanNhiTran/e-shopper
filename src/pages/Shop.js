@@ -15,7 +15,8 @@ import product12 from "../assets/images/shop/product12.jpg";
 import ads from "../assets/images/shop/advertisement.jpg";
 import news from "../assets/images/home/new.png";
 import sale from "../assets/images/home/sale.png";
-import LeftMenuBar from "../components/LeftMenuBar";
+import LeftMenuBar from "../components/layout/LeftMenuBar";
+import Footer from "../components/layout/Footer";
 
 class Shop extends Component {
   render() {
@@ -587,6 +588,7 @@ class Shop extends Component {
             </div>
           </section>
         </div>
+        <Footer />
       </>
     );
   }

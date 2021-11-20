@@ -15,6 +15,7 @@ import gallery1 from "../assets/images/home/gallery1.jpg";
 import gallery2 from "../assets/images/home/gallery2.jpg";
 import gallery3 from "../assets/images/home/gallery3.jpg";
 import gallery4 from "../assets/images/home/gallery4.jpg";
+import Footer from "../components/layout/Footer";
 
 class ProductDetail extends Component {
   render() {
@@ -572,6 +573,7 @@ class ProductDetail extends Component {
             </div>
           </div>
         </section>
+        <Footer />
       </>
     );
   }

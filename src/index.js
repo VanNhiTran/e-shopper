@@ -1,18 +1,29 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
 
-//bs4
-import "../node_modules/jquery/dist/jquery";
-import "../node_modules/popper.js/dist/popper";
-import "../node_modules/bootstrap/dist/js/bootstrap";
-import "../node_modules/bootstrap/dist/css/bootstrap.css";
+import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import App from "./App";
+import Home from "./pages/Home";
+import Shop from "./pages/Shop";
+import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
+import Login from "./pages/Login";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/shop" component={Shop} />
+          <Route path="/blog/list" component={Blog} />
+          <Route path="/blog/detail/:id" component={BlogDetail} />
+          <Route path="/login" component={Login} />
+        </Switch>
+      </App>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

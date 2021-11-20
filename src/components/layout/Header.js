@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/home/logo.png";
 
 class Header extends Component {
@@ -130,9 +131,9 @@ class Header extends Component {
                       </a>
                     </li>
                     <li>
-                      <a href="login.html">
+                      <NavLink to="/login">
                         <i className="fa fa-lock" /> Login
-                      </a>
+                      </NavLink>
                     </li>
                   </ul>
                 </div>
@@ -188,13 +189,13 @@ class Header extends Component {
                       </ul>
                     </li>
                     <li className="dropdown">
-                      <a href="/blog">
+                      <a href="/blog/list">
                         Blog
                         <i className="fa fa-angle-down" />
                       </a>
                       <ul role="menu" className="sub-menu">
                         <li>
-                          <a href="/blog">Blog List</a>
+                          <a href="/blog/list">Blog List</a>
                         </li>
                         <li>
                           <a href="blog-single.html">Blog Single</a>
