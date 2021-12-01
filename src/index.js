@@ -7,9 +7,12 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import App from "./App";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
-import Blog from "./pages/Blog";
-import BlogDetail from "./pages/BlogDetail";
-import Login from "./pages/Login";
+import Blog from "./components/Blog/Blog";
+import BlogDetail from "./components/Blog/BlogDetail";
+import Login from "./components/Account/User/Login";
+import Contact from "./components/Contact";
+import Account from "./components/Account/index";
+// import Index from "./components/Account";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -21,6 +24,9 @@ ReactDOM.render(
           <Route path="/blog/list" component={Blog} />
           <Route path="/blog/detail/:id" component={BlogDetail} />
           <Route path="/login" component={Login} />
+          <Route path="/contact" component={Contact} />
+          <Route path="/login" component={Login} />
+          <Route component={Account} />
         </Switch>
       </App>
     </Router>

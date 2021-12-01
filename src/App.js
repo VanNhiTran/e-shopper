@@ -8,20 +8,26 @@ import Footer from "./components/layout/Footer";
 
 class App extends Component {
   render() {
+    let path = this.props.location.pathname;
+
     return (
       <>
         <Header />
         <section>
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-3">
-                <LeftMenuBar />
-              </div>
+          <div className="container">
+            <div className="row">
+              {path.includes("/account") ? (
+                ""
+              ) : (
+                <div className="col-sm-3">
+                  <LeftMenuBar />{" "}
+                </div>
+              )}
+
               {this.props.children}
             </div>
           </div>
         </section>
-
         <Footer />
       </>
     );

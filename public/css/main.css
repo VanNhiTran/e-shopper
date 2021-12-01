@@ -1418,7 +1418,7 @@ h2.title {
 #form {
     display: block;
     margin-bottom: 185px;
-    margin-top: 185px;
+    /* margin-top: 185px; */
     overflow: hidden;
 }
 
@@ -2220,10 +2220,10 @@ textarea {
     margin-bottom: 27px
 }
 
-/* .response-area .media img {
+.response-area .media img {
     height: 102px;
-    width: 100%;
-} */
+    width: 100px;
+}
 
 .response-area .media .pull-left {
     margin-right: 25px

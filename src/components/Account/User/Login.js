@@ -1,5 +1,8 @@
+import axios from "axios";
 import React, { Component } from "react";
-import ErrorForm from "../components/Error/ErrorForm";
+import { baseUrl } from "../../../config/BaseUrl";
+import ErrorForm from "../../Error/ErrorForm";
+import Register from "./Register";
 
 class Login extends Component {
   constructor(props) {
@@ -7,17 +10,19 @@ class Login extends Component {
     this.state = {
       email: "",
       pass: "",
-      level: 0,
       errorForm: {},
+      user: "",
     };
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
+  handleCheck = () => {};
   handleChange = (e) => {
     let getName = e.target.name;
     this.setState({
       [getName]: e.target.value,
     });
   };
-  handleSubmit = (e) => {
+  handleSubmit(e) {
     e.preventDefault();
     let { pass, email, errorForm } = this.state;
     let flag = true;
@@ -36,12 +41,41 @@ class Login extends Component {
       errorForm.pass = "Vui lòng nhập mật khẩu";
       flag = false;
     }
-    if (flag) {
-      console.log("ok");
-      console.log(this.state.errorForm);
+
+    if (!flag) {
+      this.setState({
+        errorForm,
+      });
+    } else {
+      const user = {
+        email: this.state.email,
+        password: this.state.pass,
+      };
+      console.log(user);
+      axios
+        .post(`${baseUrl}/api/login`, user)
+        .then((res) => {
+          if (res.data.errors) {
+            this.setState({
+              errorForm: res.data.errors,
+            });
+          } else {
+            const { Auth } = res.data;
+            const { token } = res.data.success;
+            const userLogin = {
+              user,
+              auth_token: Auth,
+              token,
+            };
+            localStorage.setItem("userLogin", JSON.stringify(userLogin));
+            this.props.history.push("/");
+          }
+        })
+        .catch((err) => console.log(err));
     }
-  };
+  }
   render() {
+    console.log("abc");
     return (
       <div>
         <section id="form">
@@ -52,16 +86,19 @@ class Login extends Component {
                 <div className="login-form">
                   {/*login form*/}
                   <h2>Login to your account</h2>
-                  <form onClick={this.handleSubmit}>
+                  <ErrorForm errorForm={this.state.errorForm} />
+                  <form onSubmit={this.handleSubmit}>
                     <input
                       name="email"
-                      type="email"
+                      type="text"
+                      value={this.state.email}
                       placeholder="Email Address"
                       onChange={this.handleChange}
                     />
                     <input
-                      type="text"
+                      type="password"
                       placeholder="Password"
+                      value={this.state.pass}
                       name="pass"
                       onChange={this.handleChange}
                     />
@@ -69,7 +106,7 @@ class Login extends Component {
                       <input type="checkbox" className="checkbox" />
                       Keep me signed in
                     </span>
-                    <ErrorForm errorForm={this.state.errorForm} />
+
                     <button type="submit" className="btn btn-default">
                       Login
                     </button>
@@ -80,21 +117,7 @@ class Login extends Component {
               <div className="col-sm-1">
                 <h2 className="or">OR</h2>
               </div>
-              <div className="col-sm-4">
-                <div className="signup-form">
-                  {/*sign up form*/}
-                  <h2>New User Signup!</h2>
-                  <form action="#">
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email Address" />
-                    <input type="password" placeholder="Password" />
-                    <button type="submit" className="btn btn-default">
-                      Signup
-                    </button>
-                  </form>
-                </div>
-                {/*/sign up form*/}
-              </div>
+              <Register />
             </div>
           </div>
         </section>

@@ -1,8 +1,43 @@
 import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, withRouter } from "react-router-dom";
 import logo from "../../assets/images/home/logo.png";
 
 class Header extends Component {
+  handleLogout = () => {
+    localStorage.clear();
+    this.props.history.push("/login");
+  };
+  renderLoginBtn = () => {
+    if (localStorage.userLogin) {
+      return (
+        <a onClick={this.handleLogout} style={{ cursor: "pointer" }}>
+          <i className="fa fa-lock" />
+          Logout
+        </a>
+      );
+    } else {
+      return (
+        <NavLink to="/login">
+          <i className="fa fa-lock" /> Login
+        </NavLink>
+      );
+    }
+  };
+  handleAccount = () => {
+    if (localStorage.userLogin) {
+      return (
+        <NavLink to="/account">
+          <i className="fa fa-user" /> Account
+        </NavLink>
+      );
+    } else {
+      return (
+        <NavLink to="/login">
+          <i className="fa fa-user" /> Account
+        </NavLink>
+      );
+    }
+  };
   render() {
     return (
       <header id="header">
@@ -64,9 +99,9 @@ class Header extends Component {
             <div className="row">
               <div className="col-md-4 clearfix">
                 <div className="logo pull-left">
-                  <a href="index.html">
+                  <NavLink to="/">
                     <img src={logo} alt />
-                  </a>
+                  </NavLink>
                 </div>
                 <div className="btn-group pull-right clearfix">
                   <div className="btn-group">
@@ -110,31 +145,23 @@ class Header extends Component {
               <div className="col-md-8 clearfix">
                 <div className="shop-menu clearfix pull-right">
                   <ul className="nav navbar-nav">
-                    <li>
-                      <a href>
-                        <i className="fa fa-user" /> Account
-                      </a>
-                    </li>
+                    <li>{this.handleAccount()}</li>
                     <li>
                       <a href>
                         <i className="fa fa-star" /> Wishlist
                       </a>
                     </li>
                     <li>
-                      <a href="checkout.html">
+                      <NavLink to="/checkout">
                         <i className="fa fa-crosshairs" /> Checkout
-                      </a>
-                    </li>
-                    <li>
-                      <a href="cart.html">
-                        <i className="fa fa-shopping-cart" /> Cart
-                      </a>
-                    </li>
-                    <li>
-                      <NavLink to="/login">
-                        <i className="fa fa-lock" /> Login
                       </NavLink>
                     </li>
+                    <li>
+                      <NavLink to="/cart">
+                        <i className="fa fa-shopping-cart" /> Cart
+                      </NavLink>
+                    </li>
+                    <li>{this.renderLoginBtn()}</li>
                   </ul>
                 </div>
               </div>
@@ -161,52 +188,52 @@ class Header extends Component {
                 <div className="mainmenu pull-left">
                   <ul className="nav navbar-nav collapse navbar-collapse">
                     <li>
-                      <a href="index.html">Home</a>
+                      <NavLink to="/">Home</NavLink>
                     </li>
                     <li className="dropdown">
-                      <a href="#">
+                      <NavLink to="/shop">
                         Shop
                         <i className="fa fa-angle-down" />
-                      </a>
+                      </NavLink>
                       <ul role="menu" className="sub-menu">
                         <li>
-                          <a href="shop">Products</a>
+                          <NavLink to="/shop">Products</NavLink>
                         </li>
                         <li>
-                          <a href="product-details.html" className="active">
+                          <NavLink to="/roduct-detail" className="active">
                             Product Details
-                          </a>
+                          </NavLink>
                         </li>
                         <li>
-                          <a href="checkout.html">Checkout</a>
+                          <NavLink to="/checkout">Checkout</NavLink>
                         </li>
                         <li>
-                          <a href="cart.html">Cart</a>
+                          <NavLink to="/cart">Cart</NavLink>
                         </li>
                         <li>
-                          <a href="login.html">Login</a>
+                          <NavLink to="/login">Login</NavLink>
                         </li>
                       </ul>
                     </li>
                     <li className="dropdown">
-                      <a href="/blog/list">
+                      <NavLink to="/blog/list">
                         Blog
                         <i className="fa fa-angle-down" />
-                      </a>
+                      </NavLink>
                       <ul role="menu" className="sub-menu">
                         <li>
-                          <a href="/blog/list">Blog List</a>
+                          <NavLink to="/blog/list">Blog List</NavLink>
                         </li>
                         <li>
-                          <a href="blog-single.html">Blog Single</a>
+                          <NavLink to="/blog-single.html">Blog Single</NavLink>
                         </li>
                       </ul>
                     </li>
                     <li>
-                      <a href="404.html">404</a>
+                      <NavLink to="/404.html">404</NavLink>
                     </li>
                     <li>
-                      <a href="contact-us.html">Contact</a>
+                      <NavLink to="/contact">Contact</NavLink>
                     </li>
                   </ul>
                 </div>
@@ -224,4 +251,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default withRouter(Header);

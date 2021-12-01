@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { baseUrl } from "../config/BaseUrl";
+import { baseUrl } from "../../config/BaseUrl";
+import Comment from "./CommentForm";
+import socials from "../../assets/images/blog/socials.png";
+import moment from "moment";
+import CommentPost from "./CommentPost";
+import CommentForm from "./CommentForm";
+import StarRatings from "react-star-ratings";
+import Rating from "./Rating";
 
 class BlogDetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
       blogDetail: {},
+      errorForm: {},
+      commentList: [],
+      id_comment: "",
     };
   }
+  // constructor -> render -> componentDidMount
+  // -> componentUpdaterender chay lai khi co state/props thay doi
   componentDidMount() {
     let { id } = this.props.match.params;
     axios
@@ -16,51 +28,26 @@ class BlogDetail extends Component {
       .then((res) => {
         let { data } = res.data;
         this.setState({ blogDetail: data });
+        this.setState({ commentList: data.comment });
       })
       .catch((err) => {
         console.log(err);
       });
   }
-  renderComment = () => {
-    const { blogDetail } = this.state;
-    if (blogDetail.comment?.length > 0) {
-      return blogDetail.comment.map((comment, index) => {
-        return (
-          <li className="media" key={index}>
-            <a className="pull-left" href="#">
-              <img
-                className="media-object"
-                src={`${baseUrl}/upload/Blog/image/` + comment.image_user}
-                alt
-              />
-            </a>
-            <div className="media-body">
-              <ul className="sinlge-post-meta">
-                <li>
-                  <i className="fa fa-user" />
-                  {comment.name_user}
-                </li>
-                <li>
-                  <i className="fa fa-clock-o" /> 1:33 pm
-                </li>
-                <li>
-                  <i className="fa fa-calendar" /> DEC 5, 2013
-                </li>
-              </ul>
-              <p>{comment.comment}</p>
-              <a className="btn btn-primary" href>
-                <i className="fa fa-reply" />
-                Replay
-              </a>
-            </div>
-          </li>
-        );
-      });
-    }
+  getDataCmt = (data) => {
+    this.setState({
+      commentList: this.state.commentList.concat(data),
+    });
+  };
+  getIdCmt = (id) => {
+    this.setState({
+      id_comment: id,
+    });
   };
 
   render() {
     const { blogDetail } = this.state;
+    console.log(blogDetail);
     if (blogDetail) {
       return (
         <div className="col-sm-9">
@@ -103,17 +90,7 @@ class BlogDetail extends Component {
           </div>
           {/*/blog-post-area*/}
           <div className="rating-area">
-            <ul className="ratings">
-              <li className="rate-this">Rate this item:</li>
-              <li>
-                <i className="fa fa-star color" />
-                <i className="fa fa-star color" />
-                <i className="fa fa-star color" />
-                <i className="fa fa-star" />
-                <i className="fa fa-star" />
-              </li>
-              <li className="color">(6 votes)</li>
-            </ul>
+            <Rating id={this.props.match.params.id} />
             <ul className="tag">
               <li>TAG:</li>
               <li>
@@ -134,35 +111,25 @@ class BlogDetail extends Component {
             </ul>
           </div>
 
-          {/* <div className="socials-share">
+          <div className="socials-share">
             <a href>
-              <img src="images/blog/socials.png" alt />
+              <img src={socials} alt="s" />
             </a>
-          </div> */}
-
+          </div>
           <div className="response-area">
             <h2>{blogDetail.comment?.length} RESPONSES</h2>
-            {this.renderComment()}
+            <CommentPost
+              commentList={this.state.commentList}
+              getIdCmt={this.getIdCmt}
+            />
           </div>
 
-          <div className="replay-box">
-            <div className="row">
-              <div className="col-sm-12">
-                <h2>Leave a replay</h2>
-                <div className="text-area">
-                  <div className="blank-arrow">
-                    <label>Your Name</label>
-                  </div>
-                  <span>*</span>
-                  <textarea name="message" rows={11} defaultValue={""} />
-                  <a className="btn btn-primary" href>
-                    post comment
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/*/Repaly Box*/}
+          <CommentForm
+            getDataCmt={this.getDataCmt}
+            blogDetail={this.state.blogDetail}
+            id={this.props.match.params.id}
+            id_comment={this.state.id_comment}
+          />
         </div>
       );
     }
@@ -170,3 +137,18 @@ class BlogDetail extends Component {
 }
 
 export default BlogDetail;
+
+// cmt xong, gui api, backend xu ly -> save database
+// => res: cmt moi nhat => detail => noi vao state listcmt (state thay doi thi tu render lai)
+
+// detail: lay data moi(cmt) thi reload => listcmt => hien thi ra .
+
+// function  getCmt(params) {
+//   params => noi
+// }
+
+// => component cmt
+// <comment getcmt= {this.getCmt}..
+
+// goi 1 bien : this.próp.getCmt
+// xu ly api xong va tra ve cmt moi :this.próp.getCmt(res.data)

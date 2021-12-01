@@ -6,8 +6,10 @@ class Home extends Component {
   render() {
     return (
       <>
-        <Slider />
-        <Product />
+        <div className="col-sm-9">
+          <Slider />
+          <Product />
+        </div>
       </>
     );
   }
