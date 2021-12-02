@@ -8,25 +8,22 @@ function Account(props) {
     address: "",
     phone: "",
     pass: "",
-    avatar: {},
+    // avatar: {},
   });
   const [errorForm, setErrorForm] = useState({});
-  // const [input, setInput] = useState({});
-  // const [name, setName] = useState({});
 
   useEffect(() => {
-    const userLogin = JSON.parse(localStorage.getItem("userLogin"));
-    if (userLogin) {
-      const { token, auth_token } = userLogin;
-      // setName(auth_token.name)
-      // setName(auth_token.name)
-      // setName(auth_token.name)
-      // setName(auth_token.name)
+    const userData = localStorage.getItem("userLogin");
+    if (userData) {
+      const userLogin = JSON.parse(userData);
+
+      const { token, auth_token, user } = userLogin;
       setUser({
         name: auth_token.name,
-        email: auth_token.email,
+        email: user.email,
         address: auth_token.address,
         phone: auth_token.phone,
+        pass: user.password,
       });
     }
   }, []);
@@ -36,69 +33,60 @@ function Account(props) {
     setUser({ [getName]: getValue });
   }
 
-  const handleChangeFile = (e) => {
-    let file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setUser({
-          avatar: e.target.result,
-          file: file,
-        });
-      };
+  // const handleChangeFile = (e) => {
+  //   let file = e.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       setUser({
+  //         avatar: e.target.result,
+  //         file: file,
+  //       });
+  //     };
 
-      reader.readAsDataURL(file);
-    }
-  };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
 
   function handleUpdate(e) {
     e.preventDefault();
-    const { name, email, address, phone, file } = user;
+    const { name, address, phone } = user;
     let flag = true;
-    errorForm.name = errorForm.email = errorForm.phone = errorForm.address = "";
+    let errorFormSubmit = {};
+    errorForm.name = errorForm.address = errorForm.phone = "";
     if (name == "") {
-      errorForm.name = "Vui lòng điền tên";
+      errorFormSubmit.name = "Vui lòng điền tên";
       flag = false;
-    }
-    if (email == "") {
-      errorForm.email = "Vui lòng nhập email";
-      flag = false;
-    } else {
-      const testEmail = /^[A-Z0-9._%+-]+@([A-Z0-9-]+\.)+[A-Z]{2,4}$/i;
-      if (!testEmail.test(email)) {
-        errorForm.email = "Vui lòng nhập đúng định dạng email";
-        flag = false;
-      }
     }
     if (phone == "") {
-      errorForm.phone = "Vui lòng nhập số điện thoại";
+      errorFormSubmit.phone = "Vui lòng nhập số điện thoại";
       flag = false;
     }
     if (address == "") {
-      errorForm.address = "Vui lòng nhập địa chỉ";
+      errorFormSubmit.address = "Vui lòng nhập địa chỉ";
       flag = false;
     }
-    if (file) {
-      const type = ["png", "jpg", "JPG", "PNG", "jpeg"];
-      let size = file.size;
-      let name = file.name;
-      let fileType = name.split(".");
-      let getType = fileType[fileType.length - 1];
-      if (!type.includes(getType)) {
-        errorForm.file = "Vui lòng upload file ảnh đúng định dạng";
-        flag = false;
-      } else if (size > 1024 * 1024) {
-        errorForm.file = "Vui lòng upload ảnh nhỏ hơn 1mb";
-        flag = false;
-      }
-    } else {
-      errorForm.file = "Vui lòng upload ảnh";
-      flag = false;
-    }
+    // if (file) {
+    //   const type = ["png", "jpg", "JPG", "PNG", "jpeg"];
+    //   let size = file.size;
+    //   let name = file.name;
+    //   let fileType = name.split(".");
+    //   let getType = fileType[fileType.length - 1];
+    //   if (!type.includes(getType)) {
+    //     errorForm.file = "Vui lòng upload file ảnh đúng định dạng";
+    //     flag = false;
+    //   } else if (size > 1024 * 1024) {
+    //     errorForm.file = "Vui lòng upload ảnh nhỏ hơn 1mb";
+    //     flag = false;
+    //   }
+    // } else {
+    //   errorForm.file = "Vui lòng upload ảnh";
+    //   flag = false;
+    // }
     if (!flag) {
       console.log(111);
       console.log(errorForm);
-      setErrorForm(errorForm);
+      setErrorForm(errorFormSubmit);
     } else {
       const userUpdate = {
         name: user.name,
@@ -106,6 +94,7 @@ function Account(props) {
         address: user.address,
         phone: user.phone,
       };
+      console.log(userUpdate);
     }
   }
   return (
@@ -151,7 +140,7 @@ function Account(props) {
               value={user.address}
               onChange={handleChange}
             />
-            <input type="file" name="avatar" onChange={handleChangeFile} />
+            {/* <input type="file" name="avatar" onChange={handleChangeFile} /> */}
             <button type="submit" className="btn btn-default">
               Update
             </button>
