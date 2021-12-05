@@ -26,7 +26,7 @@ class Header extends Component {
   handleAccount = () => {
     if (localStorage.userLogin) {
       return (
-        <NavLink to="/account">
+        <NavLink to="/account/update">
           <i className="fa fa-user" /> Account
         </NavLink>
       );

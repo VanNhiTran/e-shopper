@@ -12,6 +12,7 @@ import BlogDetail from "./components/Blog/BlogDetail";
 import Login from "./components/Account/User/Login";
 import Contact from "./components/Contact";
 import Account from "./components/Account/index";
+import MyProduct from "./components/Account/Products/MyProduct";
 // import Index from "./components/Account";
 
 ReactDOM.render(
@@ -27,6 +28,7 @@ ReactDOM.render(
           <Route path="/contact" component={Contact} />
           <Route path="/login" component={Login} />
           <Route component={Account} />
+          <Route component={MyProduct} />
         </Switch>
       </App>
     </Router>

@@ -15,7 +15,6 @@ class Login extends Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleCheck = () => {};
   handleChange = (e) => {
     let getName = e.target.name;
     this.setState({
@@ -63,7 +62,6 @@ class Login extends Component {
             const { Auth } = res.data;
             const { token } = res.data.success;
             const userLogin = {
-              user,
               auth_token: Auth,
               token,
             };

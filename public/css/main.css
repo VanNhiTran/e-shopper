@@ -1435,7 +1435,7 @@ h2.title {
     margin-bottom: 30px;
 }
 
-.login-form form input,
+.login-form form input, .login-form form select,
 .signup-form form input,
 .signup-form form select,
 .signup-form form textarea {
